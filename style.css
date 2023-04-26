@@ -241,6 +241,8 @@ h3 {
     width: 100%;
     border-spacing: 0px;
     font-weight: bold;
+    table-layout: fixed;
+    min-height: max-content;
 }
 
 #plan-grid-panel{
@@ -256,6 +258,7 @@ h3 {
     width: 100%;
     border-spacing: 0px;
     border-collapse: collapse;
+    table-layout: fixed;
 }
 
 .plan-subtable th{
