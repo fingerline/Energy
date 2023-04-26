@@ -213,6 +213,10 @@ h3 {
     min-width: 40px;
 }
 
+#objectives-grid-panel{
+    align-self: center;
+}
+
 #objectives-table th {
     font-size: 16px;
     font-weight: bold;
@@ -228,6 +232,8 @@ h3 {
 
 #left-grid-panel {
     grid-column: leftpanelstart;
+    display: grid;
+    grid-template-rows: [line0] 7fr [line2] 3fr [line3];
 }
 
 #plan-table {
