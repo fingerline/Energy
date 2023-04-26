@@ -23,7 +23,7 @@
     grid-template-columns: [leftpanelstart] 5fr [line1] 2fr [line2] 8fr [rightpanelend];
     min-height: 0;
     min-width: 0;
-    overflow: scroll;
+    flex-grow: 1;
 }
 
 .content-grid {
@@ -127,31 +127,6 @@
     background-color: #F6E7CD;
 }
 
-.tr {
-    border: 1px solid black;
-}
-
-.td {
-    padding: 40px;
-}
-
-.td1 {
-    padding: 90px;
-}
-
-.td2 {
-    padding: 70px;
-}
-
-.td3 {
-    padding: 30px;
-}
-
-td {
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
 /* Nathan's CSS */
 
 html {
@@ -253,4 +228,44 @@ h3 {
 
 #left-grid-panel {
     grid-column: leftpanelstart;
+}
+
+#plan-table {
+    border: 3px solid black;
+    width: 100%;
+    border-spacing: 0px;
+    font-weight: bold;
+}
+
+#plan-grid-panel{
+    align-self: end;
+}
+
+#plan-table td{
+    padding: 0px;
+}
+
+.plan-subtable{
+    font-size: 12px;
+    width: 100%;
+    border-spacing: 0px;
+    border-collapse: collapse;
+}
+
+.plan-subtable th{
+    border-bottom: 2px solid black;
+    padding: 3px 0px;
+}
+
+.plan-subtable td{
+    text-align: left;
+    padding: 2px 2px !important;
+}
+
+.plan-subtable tbody{
+    border-bottom: 2px solid black;
+}
+
+#efficiency-table tbody{
+    border-bottom: 0;
 }
