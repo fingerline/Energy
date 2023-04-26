@@ -19,10 +19,11 @@
 
 .content {
     display: grid;
-    grid-auto-columns: 1fr;
-    margin-left: 11.3rem;
-    margin-right: 11.3rem;
-    margin-top: 2rem;
+    margin: 15px;
+    grid-template-columns: [leftpanelstart] 5fr [line1] 2fr [line2] 8fr [rightpanelend];
+    min-height: 0;
+    min-width: 0;
+    overflow: scroll;
 }
 
 .content-grid {
@@ -123,11 +124,7 @@
 }
 
 .center {
-    background-color: #f6e1c3;
-    margin: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    border: 1pt solid black;
+    background-color: #F6E7CD;
 }
 
 .tr {
@@ -153,4 +150,107 @@
 td {
     padding-left: 10px;
     padding-right: 10px;
+}
+
+/* Nathan's CSS */
+
+html {
+    background: #FFFFFF;
+}
+
+body {
+    display:flex;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 1366px;
+    height: 728px;
+    background-color: #ECFFDC;
+    margin: 0px;
+    overflow: hidden;
+}
+
+/* Header Section*/
+
+h1 {
+    margin: 0px;
+}
+
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#selectors-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100px
+}
+
+.selector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px 15px 0px 15px;
+}
+
+label {
+    font-weight: bold;
+}
+
+.selector-row {
+    display: inline-flex;
+}
+
+button { 
+    width: 120px;
+}
+
+/* Body Section */
+
+h3 {
+    margin: 0px;
+    text-align: center;
+}
+
+#objectives-table {
+    border: 2px solid black;
+    font-size: small;
+    border-spacing: 0px;
+}
+
+#objectives-table td{
+    padding: 5px 3px;
+    font-weight: bold;
+}
+
+#objectives-table td:nth-child(odd){
+    min-width: 120px;
+    text-align: left;
+}
+
+#objectives-table td:nth-child(-n + 1){
+    min-width: 100px;
+}
+
+#objectives-table td:nth-child(even){
+    min-width: 40px;
+}
+
+#objectives-table th {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center; 
+    border-bottom: 2px solid black;
+    padding: 5px 0px;
+    margin-bottom: 10px;
+}
+
+.grid-panel {
+    overflow: hidden;
+}
+
+#left-grid-panel {
+    grid-column: leftpanelstart;
 }

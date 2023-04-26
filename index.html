@@ -12,49 +12,56 @@
 
 <link rel="stylesheet" href="script.js" />
 
-<body>
-
-    <body style="background-color: #ECFFDC;">
-        <div class="flex">
+    <body>
+        <div id="title">
             <h1 style="text-align: center">THE ENERGY GAME</h1>
         </div>
 
-        <div class="dropdown" style="display: flex; justify-content: space-evenly">
-            <div class="year">
-                <label>YEAR</label>
-                <br />
-                <select name="list" id="list" accesskey="target">
-                <option value="2050">2050</option>
-                <option value="2040">2040</option>
-                <option value="2030">2030</option>
-                <option value="2020">2020</option>
-                <option value="2010">2010 (read only)</option>
-                <option value="2000">2000 (read only)</option>
-                <option value="1990">1990 (read only)</option>
+        <div id="header">
+            <div id="selectors-container">
+                <div class="selector-row">
+                    <div class="year selector">
+                        <label>YEAR</label>
+                        <select name="list" id="list" accesskey="target">
+                            <option value="2050">2050</option>
+                            <option value="2040">2040</option>
+                            <option value="2030">2030</option>
+                            <option value="2020">2020</option>
+                            <option value="2010">2010 (read only)</option>
+                            <option value="2000">2000 (read only)</option>
+                            <option value="1990">1990 (read only)</option>
+                        </select>
+                    </div>
 
-                <div class="nav-content">
-                    <a href="/GAME ENERGY/1990.html">1990</a>
-                    <a rel="noopener" target="_blank" href="https://academy.hubspot.com/">Academy</a>
-                    <a rel="noopener" target="_blank" href="https://www.youtube.com/user/hubspot">YouTube</a>
+                    <div class="difficulty selector">
+                        <label>DIFFICULTY</label>
+                        <select name="difficulty" id="">
+                            <option value="easy">VERY EASY</option>
+                            <option value="EASY">EASY</option>
+                            <option value="MEDIUM">MEDIUM</option>
+                            <option value="HARD">HARD</option>
+                            <option value="VERY HARD">VERY HARD</option> 
+                        </select>
+                    </div>
+                </div>
+                <div class="selector-row">
+                    <!-- Energy -->
+                    <div class="energy selector">
+                        <label>ENERGY SECTOR</label>
+                        <select name="" id="">
+                            <option value="energy">VEHICLE FUEL</option>
+                            <option value="energy">ELECTRICITY</option>
+                            <option value="energy">HEAT</option>
+                            <option value="energy">EFFICIENCY INVESTMENT</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-
-            <div class="diff">
-                <label>DIFFICULTY</label>
-                <br />
-                <select name="" id="">
-          <option value="easy">VERY EASY</option>
-          <option value="EASY">EASY</option>
-          <option value="MEDIUM">MEDIUM</option>
-          <option value="HARD">HARD</option>
-          <option value="VERY HARD">VERY HARD</option> 
-        </select>
-            </div>
-
             <!-- obejctives  -->
 
             <div>
                 <label>OBJECTIVES</label>
-                <br />
+                
                 <div class="obj">
                     <div class="grid-items">
                         <div class="grid-item">
@@ -95,73 +102,58 @@
             </div>
 
             <!-- play buttons -->
-            <div>
-                <button id="new-game-button">NEW GAME</button>
-                <button id="load-game-button">LOAD GAME</button>
-                <button id="save-game-button">SAVE GAME</button>
-            </div>
+            <button id="new-game-button">NEW GAME</button>
+            <button id="load-game-button">LOAD GAME</button>
+            <button id="save-game-button">SAVE GAME</button>
+            
         </div>
-
-        <!-- Energy -->
-        <div style="margin-left: 11.3rem">
-            <div class="energy">
-                <label>ENERGY SECTOR</label>
-                <br />
-                <select name="" id="">
-          <option value="energy">VEHICLE FUEL</option>
-          <option value="energy">ELECTRICITY</option>
-          <option value="energy">HEAT</option>
-          <option value="energy">EFFICIENCY INVESTMENT</option>
-        </select>
-            </div>
-        </div>
-
+    
         <div class="content">
             <!-- left grid -->
-            <div class="content-grid">
+            <div id="left-grid-panel" class="grid-panel">
                 <!-- top grid -->
                 <div class="gridItem">
                     <div class="topGridItem">
-                        <img class="imgGrid" src="./images/sprites/37.png" alt="" srcset="" />
-                        <img class="imgTopGrid" src="./images/shapes/145.png" alt="" />
+                        <img class="imgGrid" src="sprites/37.png" alt="" srcset="" />
+                        <img class="imgTopGrid" src="shapes/145.png" alt="" />
                         <span style="color:black">OIL</span>
                         <span style="color:green; font-weight:bold">$25</span>
                     </div>
 
                     <div class="topGridItem">
-                        <img class="imgGrid" src="./images/shapes/73.png" alt="" srcset="" />
-                        <img class="imgTopGrid" src="./images/shapes/145.png" alt="" />
+                        <img class="imgGrid" src="shapes/73.png" alt="" srcset="" />
+                        <img class="imgTopGrid" src="shapes/145.png" alt="" />
                         <span style="color:black">CROP BIOFUELS</span>
                         <span style="color:green; font-weight:bold">$24</span>
                     </div>
 
                     <div class="topGridItem">
-                        <img class="imgGrid" src="./images/shapes/67.png" alt="" srcset="" />
-                        <img class="imgTopGrid" src="./images/shapes/145.png" alt="" />
+                        <img class="imgGrid" src="shapes/67.png" alt="" srcset="" />
+                        <img class="imgTopGrid" src="shapes/145.png" alt="" />
                         <span style="color:black">CELLULOSIC BIOFUELS</span>
                         <span style="color:green; font-weight:bold">$60</span>
                     </div>
 
                     <div class="topGridItem">
-                        <img class="imgGrid" src="./images/shapes/79.png" alt="" srcset="" />
-                        <img class="imgTopGrid" src="./images/shapes/145.png" alt="" />
+                        <img class="imgGrid" src="shapes/79.png" alt="" srcset="" />
+                        <img class="imgTopGrid" src="shapes/145.png" alt="" />
                         <span style="color:black">NATURAL GAS</span>
                         <span style="color:green; font-weight:bold">$25</span>
                     </div>
 
                     <div class="topGridItem">
-                        <img class="imgGrid" src="./images/shapes/65.png" alt="" srcset="" />
-                        <img class="imgTopGrid" src="./images/shapes/145.png" alt="" />
+                        <img class="imgGrid" src="shapes/65.png" alt="" srcset="" />
+                        <img class="imgTopGrid" src="shapes/145.png" alt="" />
                         <span style="color:black">ELECTRICITY</span>
                         <span style="color:green; font-weight:bold">$40</span>
                     </div>
                 </div>
                 <!-- bottom grid -->
                 <div class="">
-                    <table class="center" style="padding: 20px">
+                    <table class="center" id="objectives-table">
                         <thead>
                             <tr>
-                                <th>OBJECTIVES</th>
+                                <th colspan="4">OBJECTIVES</th>
                             </tr>
                         </thead>
                         <tbody style="text-align: left">
@@ -198,10 +190,10 @@
             </div>
 
             <!-- center grid -->
-            <div class="content-grid">
-                <h3 style="text-align: center">PLAN</h3>
+            <div class="plan-grid-panel" class="grid-panel">
+                <h3>PLAN</h3>
                 <div style="text-align: center">
-                    <table class="center">
+                    <table class="center" id="plan-table">
                         <tr>
                             <th class="tr">VEHICLE FUEL</th>
                         </tr>
@@ -231,12 +223,12 @@
             </div>
 
             <!-- center grid -->
-            <div class="content-grid">
+            <!-- <div class="right-grid-panel" class="grid-panel">
                 <div class="fuelImages">
                     <div>
                         <p style="font-weight: bold; text-align: center">0</p>
                         <div class="" style="text-align: center">
-                            <img class="fuelImage" src="./images/images/resources/Vehicle.ai" alt="" srcset="" />
+                            <img class="fuelImage" src="resources/Vehicle.ai" alt="" srcset="" />
                         </div>
                         <p style="text-align: center">FUEL</p>
                     </div>
@@ -245,7 +237,7 @@
                         <div class="threeImagesItem">
                             <p style="font-weight: bold; text-align: center">0</p>
                             <div class="">
-                                <img class="fuelImage" src="./images/images/resources/Electricity.ai" alt="" srcset="" />
+                                <img class="fuelImage" src="resources/Electricity.ai" alt="" srcset="" />
                             </div>
                             <p>ELEC</p>
                         </div>
@@ -253,7 +245,7 @@
                         <div class="threeImagesItem">
                             <p style="font-weight: bold; text-align: center">0</p>
                             <div class="">
-                                <img class="fuelImage" src="./images/images/resources/Heat.ai" alt="" srcset="" />
+                                <img class="fuelImage" src="resources/Heat.ai" alt="" srcset="" />
                             </div>
                             <p>HEAT</p>
                         </div>
@@ -261,20 +253,16 @@
                         <div class="threeImagesItem">
                             <p style="font-weight: bold; text-align: center">0</p>
                             <div class="">
-                                <img class="fuelImage" src="./images/shapes/154.png" alt="" srcset="" />
+                                <img class="fuelImage" src="shapes/154.png" alt="" srcset="" />
                             </div>
                             <p>ENERGY</p>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- right grid -->
-            <div class="content-grid">
+                </div>            
                 <div class="upperDiv" style="text-align: center">
                     <p style="font-weight: bold">0</p>
                     <div class="upperDivImage">
-                        <img class="" src="./images/images/resources/budget.ai" alt="" srcset="" />
+                        <img class="" src="resources/budget.ai" alt="" srcset="" />
                     </div>
                     <p>BUDGET</p>
                 </div>
@@ -283,7 +271,7 @@
                     <div class="divItem">
                         <p style="font-weight: bold; text-align: center">0</p>
                         <div class="">
-                            <img class="" src="./images/images/resources/oil barrel.ai" alt="" srcset="" />
+                            <img class="" src="resources/oil barrel.ai" alt="" srcset="" />
                         </div>
                         <p>OIL</p>
                     </div>
@@ -291,13 +279,13 @@
                     <div class="divItem">
                         <p style="font-weight: bold; text-align: center">0</p>
                         <div class="">
-                            <img class="" src="./images/images/resources/ghg.ai" alt="" srcset="" />
+                            <img class="" src="/resources/ghg.ai" alt="" srcset="" />
                         </div>
                         <p style="text-align: center">GNG</p>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </body>
 
 </html>
