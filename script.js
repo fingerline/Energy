@@ -109,7 +109,9 @@ window.onload = function() {
     updateBarToValue(energybargroup, 70, false, 30);
     updateBarToValue(fuelbargroup, 30, false);
 
+    let oildrumgroup = makeSpriteGraph(new Point(350 ,422), "OIL", "oilicon", 43, 43);
     
+    updateSpriteGraph(oildrumgroup, 0);
 
     //max necessary for any one bar is 140
     //height is always the same. 70 on any bar is always at the same y level
@@ -128,6 +130,7 @@ window.onload = function() {
 
         let barGroup = new Group(
         );
+        
         project.currentStyle = {
             strokeColor: '#000000',
             strokeWidth: 2,
@@ -403,6 +406,57 @@ window.onload = function() {
         }
     }
 
+    function makeSpriteGraph(position, name, iconpath, capval, maxval, curval){
+
+        //oil size is 150
+
+        let value = curval;
+
+        let spriteGroup = new Group();
+
+        //Not actually scaling yet
+        const scale = (capval / maxval);
+        const scalefactor = ((1.2 * Math.pow(.3 * scale + .2,2))/(Math.pow(.3*scale + .2, 2) + 1)) + .77;
+        const spriteheight = 275 * scale;
+
+        let icon = new Raster(iconpath);
+        icon.position = position;
+        icon.pivot = icon.globalToLocal(icon.bounds.bottomCenter);
+        icon.name = `${name}staticicon`;
+
+        let itemlabel = new PointText({
+            point: icon.position.add([0,20]),
+            content: name,
+            fontSize: "12",
+            justification: 'center',
+            name: `${name}statictitle`,
+        });
+
+        let group = new Group({name: "oildrumclipgroup"});
+        
+        const rectangle = new Path.Rectangle({
+            from: [icon.bounds.topLeft.x - 25 ,icon.bounds.topLeft.y + (150 - (150 * (value/capval)))],
+            to: [icon.bounds.bottomRight.x + 25,icon.bounds.bottomRight.y+25],
+            fillColor: 'orange',
+            strokeColor: new Color(0,0,0,0),
+            name: "valuemask"
+        });
+        group.addChildren([rectangle,icon]);
+        icon.blendMode = "destination-in"
+        group.blendMode = "source-over"
+        
+        let icon2 = new Raster("oil2icon");
+        icon2.position = position;
+        icon2.name = "oildrumoutline"
+        spriteGroup.addChildren([itemlabel, group, icon2]);
+        return spriteGroup;
+    }
+
+    function updateSpriteGraph(spritegroup, value){
+
+        spritegroup.removeChildren();
+        spritegroup = makeSpriteGraph(new Point(350 ,422), "OIL", "oilicon", 43, 43, value)
+    }
 
 
 }
