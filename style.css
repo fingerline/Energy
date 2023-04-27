@@ -182,6 +182,10 @@ button {
     width: 120px;
 }
 
+.right-obj-panel{
+    justify-content: right;
+}
+
 /* Body Section */
 
 h3 {
@@ -277,4 +281,15 @@ h3 {
 
 #efficiency-table tbody{
     border-bottom: 0;
+}
+
+/*Visualizer*/
+
+#visualizer {
+    border: 1px solid black;
+    margin: 20px;
+}
+
+#graphCanvas {
+    border: 1px dashed red;
 }

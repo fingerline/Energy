@@ -8,10 +8,10 @@
     <title>ENERGY GAME</title>
 
     <link rel="stylesheet" href="style.css" />
+    <script type="text/javascript" src="https://unpkg.com/acorn"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.17/paper-full.js"></script>
+    <script src="script.js"></script> 
 </head>
-
-<link rel="stylesheet" href="script.js" />
-
     <body>
         <div id="title">
             <h1 style="text-align: center">THE ENERGY GAME</h1>
@@ -81,21 +81,21 @@
                     </div>
 
                     <div class="grid-items">
-                        <div class="grid-item">
-                            <input type="checkbox" name="" id="" checked />
+                        <div class="grid-item right-obj-panel">
                             <span>FUEL MINIMUM</span>
-                        </div>
-                        <div class="grid-item">
                             <input type="checkbox" name="" id="" checked />
+                        </div>
+                        <div class="grid-item right-obj-panel">
                             <span>ELECTRICITY MINIMUM</span>
-                        </div>
-                        <div class="grid-item">
                             <input type="checkbox" name="" id="" checked />
+                        </div>
+                        <div class="grid-item right-obj-panel">
                             <span>HEAT MINIMUM</span>
-                        </div>
-                        <div class="grid-item">
                             <input type="checkbox" name="" id="" checked />
+                        </div>
+                        <div class="grid-item right-obj-panel">
                             <span>TOTAL ENERGY MINIMUM</span>
+                            <input type="checkbox" name="" id="" checked />
                         </div>
                     </div>
                 </div>
@@ -258,70 +258,9 @@
                 </div>
             </div>
 
-            <!-- center grid -->
-            <!-- <div class="right-grid-panel" class="grid-panel">
-                <div class="fuelImages">
-                    <div>
-                        <p style="font-weight: bold; text-align: center">0</p>
-                        <div class="" style="text-align: center">
-                            <img class="fuelImage" src="resources/Vehicle.ai" alt="" srcset="" />
-                        </div>
-                        <p style="text-align: center">FUEL</p>
-                    </div>
-
-                    <div class="threeImages">
-                        <div class="threeImagesItem">
-                            <p style="font-weight: bold; text-align: center">0</p>
-                            <div class="">
-                                <img class="fuelImage" src="resources/Electricity.ai" alt="" srcset="" />
-                            </div>
-                            <p>ELEC</p>
-                        </div>
-
-                        <div class="threeImagesItem">
-                            <p style="font-weight: bold; text-align: center">0</p>
-                            <div class="">
-                                <img class="fuelImage" src="resources/Heat.ai" alt="" srcset="" />
-                            </div>
-                            <p>HEAT</p>
-                        </div>
-
-                        <div class="threeImagesItem">
-                            <p style="font-weight: bold; text-align: center">0</p>
-                            <div class="">
-                                <img class="fuelImage" src="shapes/154.png" alt="" srcset="" />
-                            </div>
-                            <p>ENERGY</p>
-                        </div>
-                    </div>
-                </div>            
-                <div class="upperDiv" style="text-align: center">
-                    <p style="font-weight: bold">0</p>
-                    <div class="upperDivImage">
-                        <img class="" src="resources/budget.ai" alt="" srcset="" />
-                    </div>
-                    <p>BUDGET</p>
-                </div>
-
-                <div class="lowerDiv">
-                    <div class="divItem">
-                        <p style="font-weight: bold; text-align: center">0</p>
-                        <div class="">
-                            <img class="" src="resources/oil barrel.ai" alt="" srcset="" />
-                        </div>
-                        <p>OIL</p>
-                    </div>
-
-                    <div class="divItem">
-                        <p style="font-weight: bold; text-align: center">0</p>
-                        <div class="">
-                            <img class="" src="/resources/ghg.ai" alt="" srcset="" />
-                        </div>
-                        <p style="text-align: center">GNG</p>
-                    </div>
-                </div>
+            <div id="visualizer">
+                <canvas id="graphCanvas"></canvas>
             </div>
-        </div> -->
     </body>
 
 </html>
