@@ -93,12 +93,10 @@ window.onload = function() {
     let ghgcloudgroup = makeSpriteGraph(new Point(590,359), barstats.ghgcloud);
     
     updateSpriteGraph(barstats.oil, oildrumgroup, 39);
-    updateSpriteGraph(barstats.budget, budgetgroup, 2200);
+    updateSpriteGraph(barstats.budget, budgetgroup, 3200);
     updateSpriteGraph(barstats.ghgcloud, ghgcloudgroup, 1980);
 
     let GHGgroup = makeGHGBase(new Point(575, 460), barstats.building);
-
-    console.log(GHGgroup);
 
     updateGHGBase(barstats.building, GHGgroup, true);
     
@@ -203,12 +201,6 @@ window.onload = function() {
     function updateBarToValue(barstat, bargroup, value){
         barstat.current = value;
         const satisfaction = barstat.current + barstat.efficiency >= barstat.maximum;
-
-        console.log(`Current State:
-            Bar Maximum: ${barstat.maximum}
-            Current Value: ${barstat.current}
-            Efficiency: ${barstat.efficiency}
-            Satisfied?: ${satisfaction}`);
 
         let baseloop = bargroup.getItem({
             name: /.*baseloop/
@@ -449,7 +441,7 @@ window.onload = function() {
         
         let icon2 = new Raster(barstat.spriteiconpath);
         icon2.position = position;
-        icon2.name = "oildrumoutline"
+        icon2.name = `${barstat.name}outline`;
         spriteGroup.addChildren([itemlabel, group, icon2, valuelabel]);
 
 
@@ -457,8 +449,9 @@ window.onload = function() {
     }
 
     function updateSpriteGraph(barstat, spritegroup, value){
-        let targetcolor;
         barstat.current = value;
+
+        let targetcolor;
         targetcolor = (barstat.current < barstat.currentcap) ? SATCOLOR : UNSATCOLOR;
         let clipgroup = spritegroup.getItem({
             name: /.*clipgroup/,
@@ -468,13 +461,39 @@ window.onload = function() {
         });
         let mask = clipgroup.firstChild;
         let icon = clipgroup.lastChild;
-        let newmask = new Path.Rectangle({
-            from: [icon.bounds.topLeft.x - 25 ,icon.bounds.topLeft.y + (150 - (150 * (barstat.current/barstat.currentcap)))],
-            to: [icon.bounds.bottomRight.x + 25,icon.bounds.bottomRight.y+25],
-            fillColor: targetcolor,
-            strokeColor: new Color(0,0,0,0),
-            name: "valuemask"
-        });
+        let newmask;
+        if(barstat.name == "BUDGET"){
+            if(barstat.current >= barstat.currentcap){
+                let targetraster = "budgeticonwin"
+                if(barstat.current > barstat.currentcap){
+                    console.log(`Cap above. Cap ${barstat.currentcap}, curr ${barstat.current}`)
+                    targetraster = "budgeticonfail"
+                }
+                let oldicon = spritegroup.getItem({name:/.*staticicon/});
+                let newraster = new Raster(targetraster);
+                newraster.pivot = newraster.globalToLocal(newraster.bounds.bottomCenter);
+                newraster.position = oldicon.position;
+                spritegroup.addChild(newraster);
+                oldicon.remove();
+            } else {
+                let oldicon = spritegroup.getItem({name:/.*staticicon/});
+                let newraster = new Raster("budgeticon");
+                newraster.pivot = newraster.globalToLocal(newraster.bounds.bottomCenter);
+                newraster.position = oldicon.position;
+                spritegroup.addChild(newraster);
+                oldicon.remove();
+                newmask = makeBudgetMask(spritegroup, barstat);
+                newmask.fillColor = targetcolor;
+            }
+        } else {
+            newmask = new Path.Rectangle({
+                from: [icon.bounds.topLeft.x - 25 ,icon.bounds.topLeft.y + (150 - (150 * (barstat.current/barstat.currentcap)))],
+                to: [icon.bounds.bottomRight.x + 25,icon.bounds.bottomRight.y+25],
+                fillColor: targetcolor,
+                strokeColor: new Color(0,0,0,0),
+                name: "valuemask"
+            });
+        }
         mask.remove();
         clipgroup.insertChild(0, newmask);
         valuelabel.content = `${barstat.current}`
@@ -513,6 +532,51 @@ window.onload = function() {
         spritegroup.addChild(newraster);
         oldicon.remove();
 
+    }
+
+    function makeBudgetMask(spritegroup, barstat){
+        let icon = spritegroup.getItem({
+            name: /.*outline/
+        });
+        if(barstat.current > barstat.currentcap){
+            let maskpath = new Path({
+                rectangle: icon.bounds,
+                fillColor: "red",
+            });
+            return maskpath
+        }
+        const baseposition = icon.position;
+
+        const middletoppoint = baseposition.subtract([25,15]);
+        const lefttoppoint = baseposition.subtract([100,31]);
+        const righttoppoint = baseposition.subtract([-98,79]);
+        const rightbotpoint = baseposition.subtract([-98,-12]);
+        const middlebotpoint = baseposition.subtract([25,-98]);
+        const leftbotpoint = baseposition.subtract([100,-68]);
+
+        const toppoints = [lefttoppoint, middletoppoint, righttoppoint];
+        const botpoints = [leftbotpoint, middlebotpoint, rightbotpoint];
+        let newtops = []
+
+        const percentfull = (barstat.current / barstat.currentcap);
+        
+        for(let i = 0; i < 3; i++){
+            tp = toppoints[i].y;
+            bp = botpoints[i].y;
+            const totdistance = bp - tp;
+            const offset = percentfull * totdistance;
+            const globaloffset = bp - offset;
+            newtops.push(new Point(toppoints[i].x,globaloffset));
+        }
+
+
+
+        let maskpath = new Path({
+            segments: [newtops[0], newtops[1], newtops[2],  
+               rightbotpoint, middlebotpoint, leftbotpoint],
+            closed: true,
+        });
+        return maskpath
     }
 }
   
