@@ -1,97 +1,76 @@
-// const newGameButton = document.getElementById("new-game-button");
-// const loadGameButton = document.getElementById("load-game-button");
-// const saveGameButton = document.getElementById("save-game-button");
-// // Define variables to store game data
-// let gameData = {
-//     year: 2020,
-//     difficulty: "easy",
-//     objectives: {
-//       budgetLimit: true,
-//       oilLimit: true,
-//       ghgLimit: true,
-//       fuelMin: true,
-//       electricityMin: true,
-//       heatMin: true,
-//       totalEnergyMin: true,
-//     },
-//     energySector: "vehicleFuel",
-//     topGridItems: [
-//       { name: "CHL 125", imgSrc: "./images/sprites/37.png", alt: "", shapeSrc: "./images/shapes/145.png" },
-//       { name: "CROP PROFILES 24", imgSrc: "./images/shapes/73.png", alt: "", shapeSrc: "./images/shapes/145.png" },
-//       { name: "CELLULAR PROFILE 60", imgSrc: "./images/shapes/67.png", alt: "", shapeSrc: "./images/shapes/145.png" },
-//       { name: "NATURAL GAS 40", imgSrc: "./images/shapes/79.png", alt: "", shapeSrc: "./images/shapes/145.png" },
-//       { name: "ELECTRICITY 40", imgSrc: "./images/shapes/65.png", alt: "", shapeSrc: "./images/shapes/145.png" }
-//     ],
-//     objectivesTable: {
-//       budgetLimit: 2236,
-//       fuelMin: 25
-//     }
-//   };
-// newGameButton.addEventListener("click", function() {
-//   // code for starting a new game
-//   document.getElementById("new-game-button").addEventListener("click", function() {
-//     // Reset game data
-//     gameData.year = 2020;
-//     gameData.difficulty = "easy";
-//     gameData.objectives = {
-//       budgetLimit: true,
-//       oilLimit: true,
-//       ghgLimit: true,
-//       fuelMin: true,
-//       electricityMin: true,
-//       heatMin: true,
-//       totalEnergyMin: true,
-//     };
-//     gameData.energySector = "vehicleFuel";
-//     gameData.topGridItems = [
-//       { name: "CHL 125", imgSrc: "./images/sprites/37.png", alt: "", shapeSrc: "./images/shapes/145.png" },
-//       { name: "CROP PROFILES 24", imgSrc: "./images/shapes/73.png", alt: "", shapeSrc: "./images/shapes/145.png" },
-//       { name: "CELLULAR PROFILE 60", imgSrc: "./images/shapes/67.png", alt: "", shapeSrc: "./images/shapes/145.png" },
-//       { name: "NATURAL GAS 40", imgSrc: "./images/shapes/79.png", alt: "", shapeSrc: "./images/shapes/145.png" },
-//       { name: "ELECTRICITY 40", imgSrc: "./images/shapes/65.png", alt: "", shapeSrc: "./images/shapes/145.png" }
-//     ];
-//     gameData.objectivesTable = {
-//       budgetLimit: 2236,
-//       fuelMin: 25
-//     };
-  
-//     // Display success message
-//     alert("New game created!");
-//   });
-// });
+// This is a state variable. This will get changed based
+// on the current "year" setting.
+let barstats = {
+    elec: {
+        name: "ELEC",
+        maximum: 140,
+        current: 50,
+        iconpath: "elecicon",
+        efficiency: 30,
+    },
+    heat: {
+        name: "HEAT",
+        maximum: 79,
+        current: 50,
+        iconpath: "heaticon",
+        efficiency: 30,
+    },
+    energy: {
+        name: "ENERGY",
+        maximum: 100,
+        current: 50,
+        iconpath: "energyicon",
+        efficiency: 30,
+    },
+    fuel: {
+        name: "FUEL",
+        maximum: 76,
+        current: 50,
+        iconpath: "fuelicon",
+        efficiency: 30,
+    },
+    oil: {
+        name: "OIL",
+        maximumvalue: 41,
+        maximumsize: 150,
+        currentcap: 41,
+        current: 39,
+        clipiconpath: "oilmask",
+        spriteiconpath: "oilicon",
+    },
+    budget: {
+        name: "BUDGET",
+        maximumvalue: 3200,
+        maximumsize: 150,
+        currentcap: 3200,
+        current: 1500,
+        clipiconpath: "budgetmask",
+        spriteiconpath: "budgeticon",
+    },
+    ghgcloud: {
+        name: "",
+        maximumvalue: 6300,
+        maximumsize: 120,
+        currentcap: 6300,
+        current: 4000,
+        clipiconpath: "cloudmask",
+        spriteiconpath: "cloudicon",
+    },
+    building: {
+        name: "GHG",
+        satisfied: false,
+        unsatisfiediconpath: "buildingiconunsat",
+        satisfiediconpath: "buildingiconsat",
+    }
+}
 
-// loadGameButton.addEventListener("click", function() {
-//     document.getElementById("load-game-button").addEventListener("click", function() {
-//         // Retrieve game data from storage (in this case, from local storage)
-//         let savedGameData = JSON.parse(localStorage.getItem("gameData"));
-      
-//         // Check if there is saved game data
-//         if (savedGameData) {
-//           // Set game data to saved game data
-//           gameData = savedGameData;
-      
-//           // Display success message
-//           alert("Game loaded successfully");
-//         } else {
-//           // Display error message
-//           alert("No saved game data found.");
-//         }
-//       });
-// });
+const SATCOLOR = "#91C84B";
+const UNSATCOLOR = "#FF0000";
 
-// saveGameButton.addEventListener("click", function() {
-//     document.getElementById("save-game-button").addEventListener("click", function() {
-//         // Save game data to local storage
-//         localStorage.setItem("gameData", JSON.stringify(gameData));
-      
-//         // Display success message
-//         alert("Game saved successfully!");
-//       });
-// });
 paper.install(window);
 window.onload = function() {
     const canvas = document.getElementById("graphCanvas");
-    canvas.width = 520;
+    canvas.width = 670;
     canvas.height = 520;
 
     paper.setup("graphCanvas");
@@ -99,27 +78,37 @@ window.onload = function() {
     let staticassets = [];
     let dynamicassets = [];
 
-    let elecbargroup = makeBar(new Point(20,497), "ELEC", "elecicon", 140);
-    let heatbargroup = makeBar(new Point(100,497), "HEAT", "heaticon", 79);
-    let energybargroup = makeBar(new Point(180, 497), "ENERGY", "energyicon", 100);
-    let fuelbargroup = makeBar(new Point(100,180), "FUEL", "fuelicon", 76);
+    let elecbargroup = makeBar(new Point(20,497), barstats.elec);
+    let heatbargroup = makeBar(new Point(100,497), barstats.heat);
+    let energybargroup = makeBar(new Point(180, 497), barstats.energy);
+    let fuelbargroup = makeBar(new Point(110,180), barstats.fuel);
 
-    updateBarToValue(elecbargroup, 126, false, 13);
-    updateBarToValue(heatbargroup, 40, false);
-    updateBarToValue(energybargroup, 70, false, 30);
-    updateBarToValue(fuelbargroup, 30, false);
+    updateBarToValue(barstats.elec, elecbargroup, 126);
+    updateBarToValue(barstats.heat, heatbargroup, 40);
+    updateBarToValue(barstats.energy, energybargroup, 101);
+    updateBarToValue(barstats.fuel, fuelbargroup, 20);
 
-    let oildrumgroup = makeSpriteGraph(new Point(350 ,422), "OIL", "oilicon", 43, 43);
+    let oildrumgroup = makeSpriteGraph(new Point(385 ,422), barstats.oil);
+    let budgetgroup = makeSpriteGraph(new Point(487, 132), barstats.budget);
+    let ghgcloudgroup = makeSpriteGraph(new Point(590,359), barstats.ghgcloud);
     
-    updateSpriteGraph(oildrumgroup, 0);
+    updateSpriteGraph(barstats.oil, oildrumgroup, 39);
+    updateSpriteGraph(barstats.budget, budgetgroup, 2200);
+    updateSpriteGraph(barstats.ghgcloud, ghgcloudgroup, 1980);
 
+    let GHGgroup = makeGHGBase(new Point(575, 460), barstats.building);
+
+    console.log(GHGgroup);
+
+    updateGHGBase(barstats.building, GHGgroup, true);
+    
     //max necessary for any one bar is 140
     //height is always the same. 70 on any bar is always at the same y level
 
 
-    function makeBar(position, name, iconpath, maxval){
+    function makeBar(position, barstat){
 
-        const scale = (maxval / 140);
+        const scale = (barstat.maximum / 140);
         // Don't have original code handy and little time remaining, approximation of original scale
         // It is doubtless significantly less complex than this but I simply do not have the time to refine
         const scalefactor = ((1.2 * Math.pow(.3 * scale + .2,2))/(Math.pow(.3*scale + .2, 2) + 1)) + .77;
@@ -128,8 +117,7 @@ window.onload = function() {
         const basedepthy = 10 * scalefactor;
         const barheight = 275 * scale;
 
-        let barGroup = new Group(
-        );
+        let barGroup = new Group();
         
         project.currentStyle = {
             strokeColor: '#000000',
@@ -145,44 +133,44 @@ window.onload = function() {
             ],
             closed: true,
             strokeColor: "black",
-            name: `${name}staticbaseloop`,
+            name: `${barstat.name}staticbaseloop`,
         });
 
         let toploop = baseloop.clone();
-        toploop.name = `${name}statictoploop`;
+        toploop.name = `${barstat.name}statictoploop`;
         toploop.position = baseloop.position.subtract([0,barheight]);
 
-        let icon = new Raster(iconpath);
+        let icon = new Raster(barstat.iconpath);
         icon.position = [baseloop.position.x, 
             baseloop.position.y-(barheight / 2)];
-        icon.name = `${name}staticicon`;
+        icon.name = `${barstat.name}staticicon`;
 
         let firstlinker = new Path.Line({
             from: baseloop.segments[0].point,
             to: toploop.segments[0].point,
             strokeColor: "black",
-            name: `${name}staticlinker1`,
+            name: `${barstat.name}staticlinker1`,
         });
 
         let secondlinker = new Path.Line({
             from: baseloop.segments[1].point,
             to: toploop.segments[1].point,
             strokeColor: "black",
-            name: `${name}staticlinker2`,
+            name: `${barstat.name}staticlinker2`,
         });
 
         let thirdlinker = new Path.Line({
             from: baseloop.segments[2].point,
             to: toploop.segments[2].point,
             strokeColor: "black",
-            name: `${name}staticlinker3`,
+            name: `${barstat.name}staticlinker3`,
         });
 
         let fourthlinker = new Path.Line({
             from: baseloop.segments[3].point,
             to: toploop.segments[3].point,
             strokeColor: "black",
-            name: `${name}staticlinker4`,
+            name: `${barstat.name}staticlinker4`,
         });
 
         project.currentStyle = {
@@ -192,10 +180,10 @@ window.onload = function() {
 
         let bartitle = new PointText({
             point: baseloop.position.add([0,20]),
-            content: name,
+            content: barstat.name,
             fontWeight: 'bold',
             justification: 'center',
-            name: `${name}statictitle`,
+            name: `${barstat.name}statictitle`,
         });
 
         barGroup.addChildren([baseloop, toploop, icon, firstlinker, secondlinker, thirdlinker,
@@ -212,7 +200,15 @@ window.onload = function() {
 
     }
 
-    function updateBarToValue(bargroup, value, satisfaction, efficiency = 0){
+    function updateBarToValue(barstat, bargroup, value){
+        barstat.current = value;
+        const satisfaction = barstat.current + barstat.efficiency >= barstat.maximum;
+
+        console.log(`Current State:
+            Bar Maximum: ${barstat.maximum}
+            Current Value: ${barstat.current}
+            Efficiency: ${barstat.efficiency}
+            Satisfied?: ${satisfaction}`);
 
         let baseloop = bargroup.getItem({
             name: /.*baseloop/
@@ -224,10 +220,10 @@ window.onload = function() {
         let surfaceloop = baseloop.clone();
         surfaceloop.name = "dynamicsurfaceloop";
 
-        let surfacecolor = (satisfaction ? "#91C84B" : "#FF0000");
+        let surfacecolor = (satisfaction ? SATCOLOR : UNSATCOLOR);
         surfaceloop.fillColor = surfacecolor;
 
-        surfaceloop.position = surfaceloop.position.subtract([0, 275 * (value/140)]);
+        surfaceloop.position = surfaceloop.position.subtract([0, 275 * (barstat.current/140)]);
         
         project.currentStyle = {
             strokeWidth: 2,
@@ -274,7 +270,7 @@ window.onload = function() {
 
         let valuelabel = new PointText({
             point: [surfaceloop.position.x + 4, labelyval],
-            content: `${value}`,
+            content: `${barstat.current}`,
             justification: 'center',
             fontSize: 16,
             name: `dynamicvaluelabel`,
@@ -286,8 +282,8 @@ window.onload = function() {
         let overeff = null;
         let overcap = null;
 
-        if(efficiency > 0){
-            let effscale = (efficiency/140) * 275;
+        if(barstat.efficiency > 0){
+            let effscale = (barstat.efficiency/140) * 275;
             let efffrontloop = new Path({
                segments: [
                 toploop.segments[0].point.add([0,effscale]),
@@ -331,8 +327,8 @@ window.onload = function() {
             bargroup.addChildren([efffrontloop, effsideloop, efftoploop, effbotloop]);
             dynamicassets.push(efffrontloop, effsideloop, efftoploop, effbotloop);
 
-            overeff = effbotloop.position.y > surfaceloop.position.y;
-            overcap = toploop.position.y > surfaceloop.position.y;
+            overeff = (barstat.current > (barstat.maximum - barstat.efficiency));
+            overcap = (barstat.current > barstat.maximum);
 
             if(satisfaction){
                 if(overeff){
@@ -379,7 +375,7 @@ window.onload = function() {
         }  
 
         surfaceloop.bringToFront();
-        if (efficiency > 0){
+        if (barstat.efficiency > 0){
             bargroup.getItem({name: /.*efffrontloop/}).bringToFront();
             bargroup.getItem({name: /.*effsideloop/}).bringToFront();
             if(overeff){
@@ -406,36 +402,42 @@ window.onload = function() {
         }
     }
 
-    function makeSpriteGraph(position, name, iconpath, capval, maxval, curval){
+    function makeSpriteGraph(position, barstat){
 
         //oil size is 150
-
-        let value = curval;
 
         let spriteGroup = new Group();
 
         //Not actually scaling yet
-        const scale = (capval / maxval);
-        const scalefactor = ((1.2 * Math.pow(.3 * scale + .2,2))/(Math.pow(.3*scale + .2, 2) + 1)) + .77;
-        const spriteheight = 275 * scale;
+        const scalepercent = (barstat.currentcap / barstat.maximumvalue)
+        const scalefactor = ((1.2 * Math.pow(.3 * scalepercent + .2,2))/(Math.pow(.3*scalepercent + .2, 2) + 1)) + .77;
+        const spriteheight = barstat.maximumsize * scalepercent;
 
-        let icon = new Raster(iconpath);
+        let icon = new Raster(barstat.clipiconpath);
         icon.position = position;
         icon.pivot = icon.globalToLocal(icon.bounds.bottomCenter);
-        icon.name = `${name}staticicon`;
+        icon.name = `${barstat.name}staticicon`;
 
         let itemlabel = new PointText({
             point: icon.position.add([0,20]),
-            content: name,
+            content: barstat.name,
             fontSize: "12",
             justification: 'center',
-            name: `${name}statictitle`,
+            name: `${barstat.name}statictitle`,
         });
 
-        let group = new Group({name: "oildrumclipgroup"});
+        let valuelabel = new PointText({
+            point: icon.bounds.topCenter.subtract([0,5]),
+            content: `${barstat.current}`,
+            justification: 'center',
+            fontSize: 18,
+            name: `${barstat.name}staticvaluelabel`,
+        })
+
+        let group = new Group({name: `${barstat.name}clipgroup`});
         
         const rectangle = new Path.Rectangle({
-            from: [icon.bounds.topLeft.x - 25 ,icon.bounds.topLeft.y + (150 - (150 * (value/capval)))],
+            from: [icon.bounds.topLeft.x - 25 ,icon.bounds.topLeft.y + (150 - (150 * (barstat.current/barstat.currentcap)))],
             to: [icon.bounds.bottomRight.x + 25,icon.bounds.bottomRight.y+25],
             fillColor: 'orange',
             strokeColor: new Color(0,0,0,0),
@@ -445,20 +447,73 @@ window.onload = function() {
         icon.blendMode = "destination-in"
         group.blendMode = "source-over"
         
-        let icon2 = new Raster("oil2icon");
+        let icon2 = new Raster(barstat.spriteiconpath);
         icon2.position = position;
         icon2.name = "oildrumoutline"
-        spriteGroup.addChildren([itemlabel, group, icon2]);
+        spriteGroup.addChildren([itemlabel, group, icon2, valuelabel]);
+
+
         return spriteGroup;
     }
 
-    function updateSpriteGraph(spritegroup, value){
-
-        spritegroup.removeChildren();
-        spritegroup = makeSpriteGraph(new Point(350 ,422), "OIL", "oilicon", 43, 43, value)
+    function updateSpriteGraph(barstat, spritegroup, value){
+        let targetcolor;
+        barstat.current = value;
+        targetcolor = (barstat.current < barstat.currentcap) ? SATCOLOR : UNSATCOLOR;
+        let clipgroup = spritegroup.getItem({
+            name: /.*clipgroup/,
+        });
+        let valuelabel = spritegroup.getItem({
+            name: /.*valuelabel/
+        });
+        let mask = clipgroup.firstChild;
+        let icon = clipgroup.lastChild;
+        let newmask = new Path.Rectangle({
+            from: [icon.bounds.topLeft.x - 25 ,icon.bounds.topLeft.y + (150 - (150 * (barstat.current/barstat.currentcap)))],
+            to: [icon.bounds.bottomRight.x + 25,icon.bounds.bottomRight.y+25],
+            fillColor: targetcolor,
+            strokeColor: new Color(0,0,0,0),
+            name: "valuemask"
+        });
+        mask.remove();
+        clipgroup.insertChild(0, newmask);
+        valuelabel.content = `${barstat.current}`
     }
 
+    function makeGHGBase(position, barstat){
 
+        let spritegroup = new Group();
+        let icon = new Raster(barstat.unsatisfiediconpath);
+        icon.position = position
+        icon.pivot = icon.globalToLocal(icon.bounds.bottomCenter);
+        icon.name = `${barstat.name}staticicon`;
+        let itemlabel = new PointText({
+            point: icon.position.add([0,20]),
+            content: barstat.name,
+            fontSize: "12",
+            justification: 'center',
+            name: `${barstat.name}statictitle`,
+        });
+        spritegroup.addChildren([icon, itemlabel]);
+        return spritegroup;
+    }   
+
+    function updateGHGBase(barstat, spritegroup, value){
+        barstat.satisfied = value;
+        let targetraster;
+        if(barstat.satisfied){
+            targetraster = barstat.satisfiediconpath;
+        } else {
+            targetraster = barstat.unsatisfiediconpath;
+        }
+        let oldicon = spritegroup.getItem({name:/.*staticicon/});
+        let newraster = new Raster(targetraster);
+        newraster.pivot = newraster.globalToLocal(newraster.bounds.bottomCenter);
+        newraster.position = oldicon.position;
+        spritegroup.addChild(newraster);
+        oldicon.remove();
+
+    }
 }
   
   
